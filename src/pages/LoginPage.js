@@ -44,6 +44,14 @@ function LoginPage({ changePage }) {
     if (isRegister) {
       //if registration
       console.log("I'll call the API");
+      enqueueSnackbar(
+        "API non ancora implementata! Qui verrà effettuata la registrazione di un nuovo utente ",
+        {
+          variant: "error",
+          autoHideDuration: 5000,
+          preventDuplicate: false,
+        }
+      );
     } else {
       //if login
       const response = await postLogin(user.username, user.password);
