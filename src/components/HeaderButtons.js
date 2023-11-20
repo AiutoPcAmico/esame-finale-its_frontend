@@ -82,7 +82,10 @@ function HeaderButtons({ username, setWebpage }) {
       <MyDialogMessage
         isOpen={dialogOpened}
         returnMessage={doLogout}
-        text={"Vuoi davvero effettuare il logout?"}
+        text={[
+          "Vuoi davvero effettuare il logout?",
+          "Per confermare, seleziona sotto o annulla.",
+        ]}
         title={"Logout"}
         key={"logout"}
         onlyOk={false}

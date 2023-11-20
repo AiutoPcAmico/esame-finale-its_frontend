@@ -9,19 +9,21 @@ function Reservation({ changePage }) {
   const [products, setProducts] = useState([]);
   const [market, setMarket] = useState(null);
   const [openedSection, setOpenedSection] = useState(0);
-  const [finalMessage, setFinalMessage] = useState("");
+  const [finalMessage, setFinalMessage] = useState();
 
   function handleClose() {
     changePage("homempage");
   }
 
   useEffect(() => {
-    if (openedSection === 3)
-      setFinalMessage(
-        "Complimenti! La spesa è stata effettuata! Ritirala col seugente codice : " +
-          makeId(7) +
-          "       Grazie per aver usato il nostro software!"
-      );
+    if (openedSection === 3) {
+      var msg = [];
+      msg[0] = "Complimenti! La spesa è stata effettuata!";
+      msg[1] = "Ritirala col seguente codice --- " + makeId(7) + " ---";
+      msg[2] = "Grazie per aver usato il nostro software!";
+
+      setFinalMessage(msg);
+    }
   }, [openedSection]);
   return (
     <div className="tablePage">

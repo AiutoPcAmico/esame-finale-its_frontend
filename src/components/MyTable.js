@@ -40,11 +40,13 @@ function MyTable({
     <Paper className="table">
       {searchVisible && (
         <div className="searchField">
-          <Typography>Cerca provincia:&nbsp;&nbsp;&nbsp;</Typography>
+          <Typography>
+            Cerca {columnsTable[0].label}:&nbsp;&nbsp;&nbsp;
+          </Typography>
 
           <TextField
             id="standard-basic"
-            label="Provincia"
+            label={columnsTable[0].label}
             variant="outlined"
             size="small"
             value={search}

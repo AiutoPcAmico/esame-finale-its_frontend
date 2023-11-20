@@ -28,6 +28,7 @@ function SelectProducts({ confirmation, setOpenedSection }) {
       minWidth: 80,
       type: "string",
       align: "left",
+      format: (params) => params.toFixed(2) + " €",
     },
   ];
 

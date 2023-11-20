@@ -31,9 +31,17 @@ function MyDialogMessage({
       >
         <DialogTitle>{title}</DialogTitle>
         <DialogContent>
-          <DialogContentText id="alert-dialog-slide-description">
-            {text}
-          </DialogContentText>
+          {text && (
+            <DialogContentText id="alert-dialog-slide-description">
+              {text[0] && text[0]}
+              <br></br>
+              {text[1] && text[1]}
+              <br></br>
+              {text[2] && text[2]}
+              <br></br>
+              {text[3] && text[3]}
+            </DialogContentText>
+          )}
         </DialogContent>
         <DialogActions>
           {!onlyOk && (
