@@ -19,6 +19,7 @@ function HeaderButtons({ username, setWebpage }) {
         autoHideDuration: 5000,
         preventDuplicate: true,
       });
+      setWebpage("homepage");
     } else {
       //nothing
     }
@@ -61,6 +62,7 @@ function HeaderButtons({ username, setWebpage }) {
       <Button
         variant="contained"
         style={{ marginLeft: "10px" }}
+        disabled={!username}
         color={"success"}
         onClick={() => setWebpage("markets")}
       >
@@ -70,6 +72,7 @@ function HeaderButtons({ username, setWebpage }) {
       <Button
         variant="contained"
         style={{ marginLeft: "10px" }}
+        disabled={!username}
         color={"success"}
         onClick={() => setWebpage("reservation")}
       >

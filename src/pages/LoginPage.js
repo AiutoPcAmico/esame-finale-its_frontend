@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import { Fragment, useEffect, useState } from "react";
 import "./pages.css";
-import { postLogin } from "../apis/indexAppApi";
+import { postLogin, putRegister } from "../apis/indexAppApi";
 import { useDispatch } from "react-redux";
 import { setSessionDetails, setSessionUser } from "../stores/sessionInfo";
 import { jwtDecode } from "jwt-decode";
@@ -17,7 +17,12 @@ import { enqueueSnackbar } from "notistack";
 
 function LoginPage({ changePage }) {
   const dispatch = useDispatch();
-  const [user, setUser] = useState({ username: "", password: "", email: "" });
+  const [user, setUser] = useState({
+    username: "",
+    password: "",
+    email: "",
+    fidelityCard: null,
+  });
   const [canISave, setCanISave] = useState(false);
   const [isRegister, setIsRegister] = useState(false);
 
@@ -32,7 +37,8 @@ function LoginPage({ changePage }) {
       user.username !== "" &&
       user.password !== "" &&
       user.password.length > 5 &&
-      (!isRegister || user.email !== "")
+      (!isRegister || user.email !== "") &&
+      (!isRegister || user.fidelityCard !== "")
     ) {
       setCanISave(true);
     } else {
@@ -44,14 +50,25 @@ function LoginPage({ changePage }) {
     if (isRegister) {
       //if registration
       console.log("I'll call the API");
-      enqueueSnackbar(
-        "API non ancora implementata! Qui verrà effettuata la registrazione di un nuovo utente ",
-        {
+      const response = await putRegister({
+        username: user.username,
+        password: user.password,
+        email: user.email,
+        fidelityCard: user.fidelityCard,
+      });
+      if (response.isError) {
+        enqueueSnackbar("Si è verificato un errore: " + response.data.data, {
           variant: "error",
-          autoHideDuration: 5000,
+          autoHideDuration: 3000,
           preventDuplicate: false,
-        }
-      );
+        });
+      } else {
+        enqueueSnackbar("Utente creato correttamente, puoi tornare al login!", {
+          variant: "success",
+          autoHideDuration: 3000,
+          preventDuplicate: false,
+        });
+      }
     } else {
       //if login
       const response = await postLogin(user.username, user.password);
@@ -150,6 +167,24 @@ function LoginPage({ changePage }) {
                   />
                 </div>
               )}
+
+              {isRegister && (
+                <div className="correctHeight">
+                  <TextField
+                    required
+                    id="identity"
+                    label="Numero tessera fedeltà"
+                    defaultValue=""
+                    fullWidth
+                    type="number"
+                    value={user.fidelityCard}
+                    onChange={(e) => {
+                      setUser({ ...user, fidelityCard: e.target.value });
+                    }}
+                  />
+                </div>
+              )}
+
               <div className="correctHeight">
                 {
                   <Button

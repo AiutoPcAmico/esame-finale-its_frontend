@@ -13,7 +13,6 @@ function retrieveErrors(statusCode, data) {
       break;
     case 201:
       //created element
-      console.log("200");
       break;
 
     case 400:
@@ -106,6 +105,25 @@ const postLogin = async (username, password) => {
   }
 };
 
+const putRegister = async ({ username, password, email, fidelityCard }) => {
+  try {
+    const response = await axios.put("/users/add", {
+      username: username,
+      password: password,
+      email: email,
+      fidelityCard: fidelityCard,
+    });
+    return retrieveErrors(response.status, response.data);
+  } catch (error) {
+    console.log({ error });
+    if (error.code === "ERR_NETWORK") {
+      return retrieveErrors(503, "Network not available!");
+    } else {
+      return retrieveErrors(error.response.status, error.response.data.result);
+    }
+  }
+};
+
 const getProvince = async () => {
   try {
     const access = store.getState(sessionInfo).sessionInfo.sessionToken;
@@ -166,4 +184,4 @@ const getProducts = async () => {
   }
 };
 
-export { postLogin, getProvince, getMarkets, getProducts };
+export { postLogin, putRegister, getProvince, getMarkets, getProducts };
