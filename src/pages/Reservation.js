@@ -1,63 +1,95 @@
 import { useEffect, useState } from "react";
-import { SelectProducts } from "../components/SelectProducts";
-import { SelectMarket } from "../components/SelectMarket";
 import { Confirmation } from "../components/Confirmation";
 import { MyDialogMessage } from "../components/MyDialogMessage";
 import { makeId } from "../utils/makeId";
+import { ListCourses } from "./ListCourses";
+import { ListGyms } from "./ListGyms";
+import { putReservation } from "../apis/indexAppApi";
+import { useSelector } from "react-redux";
+import { enqueueSnackbar } from "notistack";
 
 function Reservation({ changePage }) {
-  const [products, setProducts] = useState([]);
-  const [market, setMarket] = useState(null);
+  const [gym, setGym] = useState([]);
+  const [course, setCourse] = useState(null);
   const [openedSection, setOpenedSection] = useState(0);
   const [finalMessage, setFinalMessage] = useState();
+  const username = useSelector((state) => state.sessionInfo.user?.username);
 
-  function handleClose() {
-    changePage("homempage");
+  async function handleClose() {
+    console.log("chiusura");
+    const value = await putReservation(username, gym.key, course.key);
+    if (value.isError) {
+      enqueueSnackbar(
+        "Si è verificato un errore durante il salvataggio!  " + value.data,
+        {
+          variant: "warning",
+          autoHideDuration: 5000,
+          preventDuplicate: true,
+        }
+      );
+    } else {
+      enqueueSnackbar("Salvataggio avvenuto con successo! ", {
+        variant: "success",
+        autoHideDuration: 3000,
+        preventDuplicate: true,
+      });
+    }
+    changePage("homepage");
   }
 
   useEffect(() => {
     if (openedSection === 3) {
       var msg = [];
-      msg[0] = "Complimenti! La spesa è stata effettuata!";
-      msg[1] = "Ritirala col seguente codice --- " + makeId(7) + " ---";
-      msg[2] = "Grazie per aver usato il nostro software!";
+      msg[0] = "Complimenti! La prenotazione è stata effettuata!";
+      msg[1] = "Per accedere, utilizza il seguente codice: ";
+      msg[2] =
+        "----> " +
+        course.key +
+        "-" +
+        gym.name.substr(0, 2) +
+        "-" +
+        makeId(4) +
+        " <----";
+      msg[3] = "Grazie per aver usato il nostro software!";
 
       setFinalMessage(msg);
     }
-  }, [openedSection]);
+  }, [course, gym, openedSection]);
   return (
     <div className="tablePage">
       <div style={{ maxWidth: "90%" }}>
         {openedSection === 0 && (
-          <SelectProducts
-            setOpenedSection={setOpenedSection}
-            confirmation={(passed) => setProducts(passed)}
-          />
-        )}
-
-        {(openedSection === 1 || openedSection === 2) && (
-          <SelectMarket
+          <ListCourses
+            isSelecting={true}
             setOpenedSection={setOpenedSection}
             confirmation={(passed) => {
-              setMarket(passed);
+              setCourse(passed);
             }}
           />
         )}
 
+        {openedSection === 1 && (
+          <ListGyms
+            isSelecting={true}
+            setOpenedSection={setOpenedSection}
+            confirmation={(passed) => {
+              setGym(passed);
+            }}
+          />
+        )}
+
+        {console.log(openedSection)}
         {openedSection === 2 && (
           <Confirmation
             setOpenedSection={setOpenedSection}
-            products={products}
-            location={market[0]}
-            onConfirm={() => {
-              changePage("homepage");
-            }}
+            course={course}
+            gym={gym}
           />
         )}
 
         {openedSection === 3 && (
           <MyDialogMessage
-            onlyOk={false}
+            onlyOk={true}
             text={finalMessage}
             isOpen={true}
             title={"Ritiro"}

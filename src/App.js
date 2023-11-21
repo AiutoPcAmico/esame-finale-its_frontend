@@ -5,8 +5,10 @@ import { Typography } from "@mui/material";
 import { useSelector } from "react-redux";
 import { SnackbarProvider } from "notistack";
 import { HeaderButtons } from "./components/HeaderButtons";
-import { ListMarkets } from "./pages/ListMarkets.js";
 import { Reservation } from "./pages/Reservation.js";
+import { ListGyms } from "./pages/ListGyms.js";
+import { ListCourses } from "./pages/ListCourses.js";
+import { ListReservations } from "./pages/ListReservations.js";
 
 function App() {
   const username = useSelector((state) => state.sessionInfo.user?.username);
@@ -27,8 +29,10 @@ function App() {
             "Questa è la pagina HomePage, naviga con i pulsanti qui sopra!"
           </Typography>
         )}
-        {webpage === "markets" && <ListMarkets />}
-        {webpage === "reservation" && <Reservation changePage={setWebpage} />}
+        {webpage === "gyms" && <ListGyms />}
+        {webpage === "courses" && <ListCourses />}
+        {webpage === "reservations" && <ListReservations />}
+        {webpage === "newres" && <Reservation changePage={setWebpage} />}
       </SnackbarProvider>
     </div>
   );

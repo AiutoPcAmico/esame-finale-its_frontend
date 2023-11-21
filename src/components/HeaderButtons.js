@@ -54,19 +54,11 @@ function HeaderButtons({ username, setWebpage }) {
       <Button
         variant="contained"
         style={{ marginLeft: "10px" }}
-        color={"success"}
-        onClick={() => setWebpage("homepage")}
-      >
-        Vai alla HomePage
-      </Button>
-      <Button
-        variant="contained"
-        style={{ marginLeft: "10px" }}
         disabled={!username}
         color={"success"}
-        onClick={() => setWebpage("markets")}
+        onClick={() => setWebpage("gyms")}
       >
-        Vai alla lista Markets
+        Visualizza palestre
       </Button>
 
       <Button
@@ -74,7 +66,36 @@ function HeaderButtons({ username, setWebpage }) {
         style={{ marginLeft: "10px" }}
         disabled={!username}
         color={"success"}
-        onClick={() => setWebpage("reservation")}
+        onClick={() => setWebpage("courses")}
+      >
+        Visualizza Corsi
+      </Button>
+
+      <Button
+        variant="contained"
+        style={{ marginLeft: "10px" }}
+        disabled={!username}
+        color={"success"}
+        onClick={() => setWebpage("reservations")}
+      >
+        Visualizza Prenotazioni
+      </Button>
+
+      <Button
+        variant="contained"
+        style={{ marginLeft: "10px" }}
+        color={"primary"}
+        onClick={() => setWebpage("homepage")}
+      >
+        Vai alla HomePage
+      </Button>
+
+      <Button
+        variant="contained"
+        style={{ marginLeft: "10px" }}
+        disabled={!username}
+        color={"primary"}
+        onClick={() => setWebpage("newres")}
       >
         Vai Esegui prenotazione
       </Button>

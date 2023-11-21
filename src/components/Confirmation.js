@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { MyDialogMessage } from "./MyDialogMessage";
 
-function Confirmation({ products, location, onConfirm, setOpenedSection }) {
+function Confirmation({ course, gym, onConfirm, setOpenedSection }) {
   const [message, setMessage] = useState("");
   const [isOpened, setIsOpened] = useState(false);
 
@@ -15,26 +15,21 @@ function Confirmation({ products, location, onConfirm, setOpenedSection }) {
   }
 
   useEffect(() => {
-    //on load or changing products, i'll recalculate the total price
+    //on load, i'll recalulcate the message
+
     var localMes = [];
-    localMes[0] = "Confermi l'acquisto di:";
-    localMes[1] = "";
-    products.map((single) => {
-      return (localMes[1] = localMes[1] + single.key + "   -   ");
-    });
+    console.log({ course, gym });
+    localMes[0] = "Confermi la prenotazione del corso: " + course.name;
+    localMes[1] = "presso la palestra: " + gym.name;
+    localMes[2] = "per la data del " + course.dateTime + "?";
 
-    var total = products.reduce((total, single) => total + single.price, 0);
-    console.log(total);
-
-    localMes[2] = " al prezzo di " + total.toFixed(2) + " €?";
-    localMes[3] = "Ritirerai la spesa presso: " + location.name;
     setMessage(localMes);
-    console.log({ localMes });
     setIsOpened(true);
-  }, [products, location.name]);
+  }, [course, gym]);
 
   return (
     <div>
+      <p>jjjj</p>
       <MyDialogMessage
         onlyOk={false}
         text={message}

@@ -184,4 +184,102 @@ const getProducts = async () => {
   }
 };
 
-export { postLogin, putRegister, getProvince, getMarkets, getProducts };
+const getGyms = async () => {
+  try {
+    const access = store.getState(sessionInfo).sessionInfo.sessionToken;
+
+    const response = await axios.get("/gyms/getall", {
+      headers: {
+        Authorization: "Bearer " + access,
+      },
+    });
+    return retrieveErrors(response.status, response.data);
+  } catch (error) {
+    console.log({ error });
+    if (error.code === "ERR_NETWORK") {
+      return retrieveErrors(503, "Network not available!");
+    } else {
+      return retrieveErrors(error.response.status, error.response.data.result);
+    }
+  }
+};
+
+const getCourses = async () => {
+  try {
+    const access = store.getState(sessionInfo).sessionInfo.sessionToken;
+
+    const response = await axios.get("/courses/getall", {
+      headers: {
+        Authorization: "Bearer " + access,
+      },
+    });
+    return retrieveErrors(response.status, response.data);
+  } catch (error) {
+    console.log({ error });
+    if (error.code === "ERR_NETWORK") {
+      return retrieveErrors(503, "Network not available!");
+    } else {
+      return retrieveErrors(error.response.status, error.response.data.result);
+    }
+  }
+};
+
+const getReservations = async () => {
+  try {
+    const access = store.getState(sessionInfo).sessionInfo.sessionToken;
+
+    const response = await axios.get("/reservations/getall", {
+      headers: {
+        Authorization: "Bearer " + access,
+      },
+    });
+    return retrieveErrors(response.status, response.data);
+  } catch (error) {
+    console.log({ error });
+    if (error.code === "ERR_NETWORK") {
+      return retrieveErrors(503, "Network not available!");
+    } else {
+      return retrieveErrors(error.response.status, error.response.data.result);
+    }
+  }
+};
+
+const putReservation = async (user, idGym, idCourse) => {
+  try {
+    const access = store.getState(sessionInfo).sessionInfo.sessionToken;
+
+    const response = await axios.put(
+      "/reservations/add",
+      {
+        username: user,
+        idGym: idGym,
+        idCourse: idCourse,
+      },
+      {
+        headers: {
+          Authorization: "Bearer " + access,
+        },
+      }
+    );
+    return retrieveErrors(response.status, response.data);
+  } catch (error) {
+    console.log({ error });
+    if (error.code === "ERR_NETWORK") {
+      return retrieveErrors(503, "Network not available!");
+    } else {
+      return retrieveErrors(error.response.status, error.response.data.result);
+    }
+  }
+};
+
+export {
+  postLogin,
+  putRegister,
+  getProvince,
+  getMarkets,
+  getGyms,
+  getCourses,
+  getProducts,
+  getReservations,
+  putReservation,
+};

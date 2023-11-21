@@ -1,25 +1,32 @@
 import { useEffect, useState } from "react";
 import { MyTable } from "../components/MyTable.js";
-import { getMarkets } from "../apis/indexAppApi.js";
+import { getReservations } from "../apis/indexAppApi.js";
 import { Alert } from "@mui/material";
 
-function ListMarkets() {
+function ListReservations() {
   const [list, setList] = useState([]);
   const [error, setError] = useState("Caricamento in corso...");
 
   const columns = [
-    { id: "name", label: "Ipermercato", minWidth: 170, type: "string" },
+    { id: "name", label: "Utente", minWidth: 110, type: "string" },
     {
-      id: "type",
-      label: "Tipo",
-      minWidth: 80,
+      id: "gym",
+      label: "Palestra",
+      minWidth: 110,
       type: "string",
       align: "left",
     },
     {
-      id: "location",
-      label: "Indirizzo",
-      minWidth: 250,
+      id: "course",
+      label: "Corso",
+      minWidth: 150,
+      type: "string",
+      align: "left",
+    },
+    {
+      id: "dateTime",
+      label: "Appuntamento",
+      minWidth: 150,
       type: "string",
       align: "left",
     },
@@ -29,15 +36,16 @@ function ListMarkets() {
     return {
       action: null,
       key: singleRes.id,
-      name: singleRes.name,
-      type: singleRes.type,
-      location: singleRes.location,
+      name: singleRes.user,
+      gym: singleRes.gym,
+      course: singleRes.course,
+      dateTime: singleRes.dateTime,
     };
   }
 
   useEffect(() => {
     //on page load, I'll retreieva all data from api
-    getMarkets().then((response) => {
+    getReservations().then((response) => {
       if (response.isError === false) {
         //is ok, i'll save all the data
         //preparing list
@@ -68,4 +76,4 @@ function ListMarkets() {
   );
 }
 
-export { ListMarkets };
+export { ListReservations };
