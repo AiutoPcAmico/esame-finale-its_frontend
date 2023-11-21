@@ -51,36 +51,39 @@ function HeaderButtons({ username, setWebpage }) {
           Effettua il logout
         </Button>
       )}
-      <Button
-        variant="contained"
-        style={{ marginLeft: "10px" }}
-        disabled={!username}
-        color={"success"}
-        onClick={() => setWebpage("gyms")}
-      >
-        Visualizza palestre
-      </Button>
-
-      <Button
-        variant="contained"
-        style={{ marginLeft: "10px" }}
-        disabled={!username}
-        color={"success"}
-        onClick={() => setWebpage("courses")}
-      >
-        Visualizza Corsi
-      </Button>
-
-      <Button
-        variant="contained"
-        style={{ marginLeft: "10px" }}
-        disabled={!username}
-        color={"success"}
-        onClick={() => setWebpage("reservations")}
-      >
-        Visualizza Prenotazioni
-      </Button>
-
+      {username && (
+        <Button
+          variant="contained"
+          style={{ marginLeft: "10px" }}
+          disabled={!username}
+          color={"success"}
+          onClick={() => setWebpage("gyms")}
+        >
+          Visualizza palestre
+        </Button>
+      )}
+      {username && (
+        <Button
+          variant="contained"
+          style={{ marginLeft: "10px" }}
+          disabled={!username}
+          color={"success"}
+          onClick={() => setWebpage("courses")}
+        >
+          Visualizza Corsi
+        </Button>
+      )}
+      {username && (
+        <Button
+          variant="contained"
+          style={{ marginLeft: "10px" }}
+          disabled={!username}
+          color={"success"}
+          onClick={() => setWebpage("reservations")}
+        >
+          Visualizza Prenotazioni
+        </Button>
+      )}
       <Button
         variant="contained"
         style={{ marginLeft: "10px" }}
@@ -90,15 +93,17 @@ function HeaderButtons({ username, setWebpage }) {
         Vai alla HomePage
       </Button>
 
-      <Button
-        variant="contained"
-        style={{ marginLeft: "10px" }}
-        disabled={!username}
-        color={"primary"}
-        onClick={() => setWebpage("newres")}
-      >
-        Vai Esegui prenotazione
-      </Button>
+      {username && (
+        <Button
+          variant="contained"
+          style={{ marginLeft: "10px" }}
+          disabled={!username}
+          color={"primary"}
+          onClick={() => setWebpage("newres")}
+        >
+          Vai Esegui prenotazione
+        </Button>
+      )}
 
       <MyDialogMessage
         isOpen={dialogOpened}

@@ -34,6 +34,8 @@ function Reservation({ changePage }) {
         preventDuplicate: true,
       });
     }
+    // for debugging
+    // setOpenedSection(3);
     changePage("homepage");
   }
 
