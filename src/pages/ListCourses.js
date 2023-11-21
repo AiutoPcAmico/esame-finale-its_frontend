@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { MyTable } from "../components/MyTable.js";
-import { getCourses, getGyms } from "../apis/indexAppApi.js";
+import { getCourses } from "../apis/indexAppApi.js";
 import { Alert, Button } from "@mui/material";
 
 function ListCourses({ setOpenedSection, confirmation, isSelecting = false }) {

@@ -14,7 +14,6 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import Checkbox from "@mui/material/Checkbox";
 
 import "./components.css";
 
